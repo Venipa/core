@@ -1,5 +1,5 @@
 import { Logger, logger } from '../util/logger/Logger';
-import * as Sequelize from 'sequelize';
+import * as Sequelize from 'sequelize-typescript';
 
 /**
  * >**Note:** This won't do anything for you if you're not using
@@ -34,7 +34,7 @@ export class Database
 		this._url = url;
 
 		// Lazy load sequelize
-		const seq: typeof Sequelize.Sequelize = require('sequelize').Sequelize;
+		const seq: typeof Sequelize.Sequelize = require('sequelize-typescript').Sequelize;
 		const logging: (...args: any[]) => void =
 			(...args) => { if (debug) this._logger.debug(args[0], ...args.slice(1)); };
 

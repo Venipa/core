@@ -2,7 +2,7 @@ import { StorageProviderConstructor } from '../types/StorageProviderConstructor'
 import { IStorageProvider } from './interface/IStorageProvider';
 import { StorageProvider } from './StorageProvider';
 import { Database } from './Database';
-import * as Sequelize from 'sequelize';
+import * as Sequelize from 'sequelize-typescript';
 
 /**
  * Represents a Sequelize Model instance which represents a single
@@ -34,17 +34,17 @@ export function SequelizeProvider(url: string, dialect: Dialect, debug: boolean)
 			super();
 
 			// Lazy load sequelize
-			const seq: typeof Sequelize = require('sequelize');
+			const seq: typeof Sequelize = require('sequelize-typescript');
 
 			this._backend = Database.instance(url, debug);
 			this._model = class extends seq.Model {};
 
 			this._model.init(
 				{
-					key: { type: seq.STRING, allowNull: false, primaryKey: true },
+					key: { type: seq.DataType.STRING, allowNull: false, primaryKey: true },
 					value: [Dialect.Postgres, Dialect.SQLite, Dialect.MSSQL].includes(dialect)
-						? seq.TEXT
-						: seq.TEXT('long')
+						? seq.DataType.TEXT
+						: seq.DataType.TEXT('long')
 				},
 				{
 					modelName: name,
